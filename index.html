@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./font_411081_23p02xnu8zbsm7vi/iconfont.css">
+    <link rel="stylesheet" href="./mobileReset.css">
+    <script src="./js/jquery.js"></script>
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .TableWare {
+            width: 100%;
+            height: 80px;
+            background: rgb(231, 232, 237);
+            border-bottom: 0.5px solid rgb(160, 158, 164);
+            padding-top: 1px;
+            position: fixed;
+            bottom: 0px;
+            left: 0;
+            transition: bottom .2s;
+            -webkit-transition: bottom .2s;
+            /* Safari */
+            z-index: 999;
+        }
+        
+        .TableWare-title {
+            width: 100%;
+            height: 30px;
+            /* background: #ccc; */
+            line-height: 30px;
+            margin: 0 auto;
+        }
+        
+        .TableWare-title i {
+            color: rgb(108, 111, 128);
+            font-size: 24px;
+            margin-left: 5px;
+            margin-top: 5px;
+            display: inline-block
+        }
+        
+        .TableWare-title span {
+            display: inline-block;
+            width: 70px;
+            height: 24px;
+            border: 1px solid #ccc;
+            text-align: center;
+            line-height: 24px;
+            font-size: 14px;
+            color: #333;
+            border-radius: 5px;
+            float: right;
+            margin-top: 7px;
+        }
+        
+        .TableWare-box {
+            width: 90%;
+            margin: 0 auto;
+            height: 34px;
+            border: .5px solid rgb(160, 158, 164);
+            border-radius: 3px;
+            margin-top: 7px;
+            position: relative;
+        }
+        
+        .TableWare-box-input {
+            outline: none;
+            overflow: hidden;
+            overflow-y: scroll;
+            width: 100%;
+            height: 100%;
+            line-height: 30px;
+            -webkit-user-select: text
+        }
+        
+        .TableWare-box-input img {
+            width: 18px;
+            height: 18px;
+            display: inline-block;
+        }
+        
+        .TableWare-show {
+            width: 100%;
+            height: 100px;
+            margin: 0 auto;
+            overflow: hidden;
+            overflow-y: scroll;
+            background: #fff;
+            position: absolute;
+            left: 0;
+            top: 82px;
+            padding: 10px 0;
+            z-index: 2;
+            display: none;
+        }
+        
+        .TableWare-show img {
+            width: 8%;
+            height: auto;
+            float: left;
+            margin-left: -1px;
+            margin-top: -1px;
+            position: relative;
+            margin: 1% 2%;
+            cursor: pointer;
+        }
+        
+        .loding {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            color: #333;
+            font-size: 28px;
+            position: fixed;
+            text-align: center;
+            line-height: 400px;
+            top: 0;
+            left: 0;
+            z-index: 999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="TableWare">
+        <div class="TableWare-box">
+            <div class="TableWare-box-input" contenteditable="true">
+
+            </div>
+            <div class="TableWare-title">
+                <i class="iconfont" id="a">&#xe605;</i>
+                <!-- <i class="iconfont" id="b">&#xe602;</i>
+                <i class="iconfont" id="c">&#xe638;</i> -->
+                <span id="submit">提交</span>
+            </div>
+        </div>
+        <div class="TableWare-show">
+
+        </div>
+    </div>
+    <script>
+        var alength = 124; // 文件夹的表情数量
+        $(".TableWare-box-input").focus(function() {
+            $(".TableWare-show").hide()
+            $(".TableWare-show img").remove()
+            $(".TableWare").css("bottom", "0")
+        })
+        $("#a").click(function() {
+            //判断当前是否显示表情框
+            var imgi = $(".TableWare-show img").length
+                //当表情库的个数不等于零且路径等于a文件夹第一个表情的路径则让表情库隐藏
+            if (imgi != 0) {
+                $(".TableWare-show").hide()
+                $(".TableWare-show img").remove()
+                $(".TableWare").css("bottom", "0")
+            } else {
+                $(".TableWare-show").show()
+                $(".TableWare-show img").remove()
+                $(".TableWare").css("bottom", "121px")
+                    //遍历所有存在的表情
+                for (var i = 1; i <= alength; i++) {
+                    var html =
+                        `
+                    <img src="./default/emoji_${i}.png" alt="">
+                    `
+                    $(".TableWare-show").append(html)
+                }
+                // 绑定表情显示事件
+                $(".TableWare-show img").click(add)
+            }
+        })
+
+        function add() {
+            var url = ($(this).attr("src")) //获取图片路径
+            var img =
+                `
+                <img src="${url}" alt="">
+
+                `
+            $(".TableWare-box-input").append(img)
+        }
+        $("#submit").click(function() {
+            $(".TableWare-show").hide()
+            $(".TableWare-show img").remove()
+            var html = $(".TableWare-box-input").html()
+            console.log(html)
+                // 这里发ajax作后续处理
+
+
+
+
+
+            // ajax 完毕清空内容 然后可以自己选择刷新页面或者手动添加dom元素
+            $(".TableWare-box-input").html("")
+            $(".TableWare").css("bottom", "0")
+        })
+    </script>
+</body>
+
+</html>
